@@ -1,87 +1,130 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getNotes, createNote,updateNote, deleteNote } from "../services/noteService";
+import NoteCard from "../components/NoteCard";
 
-const Dashboard = () => {
+const Dashboard = ({ darkMode, toggleDarkMode }) => {
   const [notes, setNotes] = useState([]);
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteContent, setNoteContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("development"); // Default category
+  const [filteredCategory, setFilteredCategory] = useState(""); // Category for filtering
 
-  // Add a new note
-  const handleAddNote = () => {
-    if (!noteTitle || !noteContent) return alert("Title and content are required!");
-    const newNote = {
-      id: Date.now(),
-      title: noteTitle,
-      content: noteContent,
-    };
-    setNotes([...notes, newNote]);
-    setNoteTitle("");
-    setNoteContent("");
+  useEffect(() => {
+    fetchNotes();
+  }, [filteredCategory]); // Re-fetch notes when the filtered category changes
+
+  // Fetch notes based on filtered category
+  const fetchNotes = async () => {
+    const  data  = await getNotes();
+    console.log(data,"oinoinonoinoinoinono");
+    setNotes(data);
   };
 
-  // Delete a note
-  const handleDeleteNote = (id) => {
-    setNotes(notes.filter((note) => note.id !== id));
+  const addNote = async () => {
+    if (!title.trim()) return;
+    await createNote({ title, content, category });
+    setTitle("");
+    setContent("");
+    setCategory("development"); // Reset category to default
+    fetchNotes(); // Re-fetch notes after adding a new one
+  };
+
+  const handleDelete = async (id) => {
+    await deleteNote(id);
+    fetchNotes(); // Re-fetch notes after deleting
+  };
+
+  const handleFilterChange = (e) => {
+    setFilteredCategory(e.target.value); // Set the category filter
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-700">Notes Dashboard</h1>
+    <div className={`min-h-screen py-10 ${darkMode ? "bg-gray-900" : "bg-gray-100"}`}>
+      <div className={`container mx-auto p-6 rounded-lg shadow-lg ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+        <h2 className={`text-3xl font-bold mb-6 text-center ${darkMode ? "text-white" : "text-gray-800"}`}>
+          My Notes
+        </h2>
+
+        {/* Filter Section */}
+        <div className="mb-6 flex justify-between items-center">
+          <div>
+            <label className={`text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-600"} mr-2`}>
+              Filter by Category:
+            </label>
+            <select
+              value={filteredCategory}
+              onChange={handleFilterChange}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="">All Categories</option>
+              <option value="development">Development</option>
+              <option value="production">Production</option>
+              <option value="testing">Testing</option>
+            </select>
+          </div>
+          <button
+            onClick={fetchNotes}
+            className="ml-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200"
+          >
+            Apply Filter
+          </button>
         </div>
 
-        {/* Add Note Form */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Add Note</h2>
-          <div className="space-y-4">
-            <input
-              type="text"
-              placeholder="Note Title"
-              value={noteTitle}
-              onChange={(e) => setNoteTitle(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-            />
-            <textarea
-              placeholder="Note Content"
-              value={noteContent}
-              onChange={(e) => setNoteContent(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-              rows="4"
-            ></textarea>
-            <button
-              onClick={handleAddNote}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-            >
-              Add Note
-            </button>
-          </div>
+        {/* Input Section */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Enter note title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={`w-full mb-4 px-4 py-2 border ${darkMode ? "border-gray-600" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none`}
+          />
+          <textarea
+            placeholder="Enter note content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            rows="3"
+            className={`w-full px-4 py-2 border ${darkMode ? "border-gray-600" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none`}
+          ></textarea>
+
+          {/* Category Dropdown */}
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className={`w-full mt-4 px-4 py-2 border ${darkMode ? "border-gray-600" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none`}
+          >
+            <option value="development">Development</option>
+            <option value="production">Production</option>
+            <option value="testing">Testing</option>
+          </select>
+
+          <button
+            onClick={addNote}
+            className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200"
+          >
+            Add Note
+          </button>
         </div>
 
         {/* Notes List */}
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Your Notes</h2>
-          {notes.length === 0 ? (
-            <p className="text-gray-500">No notes available. Start adding some!</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {notes.map((note) => (
-                <div
-                  key={note.id}
-                  className="p-4 border rounded-lg shadow hover:shadow-lg transition"
-                >
-                  <h3 className="text-lg font-semibold text-gray-800">{note.title}</h3>
-                  <p className="text-gray-600 mt-2">{note.content}</p>
-                  <button
-                    onClick={() => handleDeleteNote(note.id)}
-                    className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* {Array.isArray(notes) && notes.length > 0 ? ( */}
+           {notes.map((note) => (
+              <div>
+              <NoteCard
+                key={note._id}
+                note={note}
+                onDelete={() => handleDelete(note._id)}
+              />
+              {/* {note.title} */}
+              {/* {note.content} */}
+              </div>
+            ))}
+          {/* ) : (
+            <p className={`text-center ${darkMode ? "text-gray-400" : "text-gray-500"} mt-6`}>
+              No notes available. Start adding some!
+            </p>
+          )} */}
         </div>
       </div>
     </div>

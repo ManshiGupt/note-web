@@ -1,48 +1,56 @@
-// import React from "react";
+// import React, { useState, useEffect } from "react";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Login from "./components/Auth/Login";
-// import Signup from "./components/Auth/Signup";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
 // import Dashboard from "./pages/Dashboard";
-// import ProfileView from "./components/Profile/ProfileView";
-// import ProfileEdit from "./components/Profile/ProfileEdit";
-// import NotFound from "./pages/NotFound";
+// import Profile from "./pages/Profile";
+// import Navbar from "./components/Navbar";
+// import "./index.css"; // Tailwind or Bootstrap
 
-// const App = () => {
+// function App() {
+//   const [darkMode, setDarkMode] = useState(false);
+
+//   // Check for dark mode preference on page load
+//   useEffect(() => {
+//     const savedDarkMode = localStorage.getItem("darkMode") === "true";
+//     setDarkMode(savedDarkMode);
+//   }, []);
+
+//   // Toggle Dark Mode and save preference in localStorage
+//   const toggleDarkMode = () => {
+//     const newDarkMode = !darkMode;
+//     setDarkMode(newDarkMode);
+//     localStorage.setItem("darkMode", newDarkMode); // Save preference in localStorage
+//   };
+
 //   return (
 //     <Router>
-//       <Routes>
-//         <Route path="/" element={<Login />} />
-//         <Route path="/signup" element={<Signup />} />
-//         <Route path="/dashboard" element={<Dashboard />} />
-//         <Route path="/profile" element={<ProfileView />} />
-//         <Route path="/profile/edit" element={<ProfileEdit />} />
-//         <Route path="*" element={<NotFound />} />
-//       </Routes>
+//       <div className={darkMode ? "dark" : ""}>
+//         <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+
+//         <Routes>
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/register" element={<Register />} />
+//           <Route
+//             path="/dashboard"
+//             element={<Dashboard darkMode={darkMode} />}
+//           />
+//           <Route path="/profile" element={<Profile darkMode={darkMode} />} />
+//           <Route path="*" element={<Login />} />
+//         </Routes>
+//       </div>
 //     </Router>
 //   );
-// };
+// }
 
 // export default App;
-// import { Route, Router } from "react-router-dom"
-import Login from "./components/Auth/Login"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
 import React from 'react'
-import ProfileView from "./components/Profile/ProfileView";
-
+import Dashboard from "./pages/Dashboard"
 const App = () => {
+  
   return (
     <div>
-      {/* <Router>
-        <Routes>
-          <Route path="/" element={<ProfileView/>}/> */}
-          {/* <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<ProfileView />} />
-        <Route path="/profile/edit" element={<ProfileEdit />} /> */}
-        {/* </Routes>
-      </Router> */}
-      <ProfileView/>
+      <Dashboard/>
     </div>
   )
 }
