@@ -4,14 +4,14 @@ import { login } from "../services/authService";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [emailId, setemailId] = useState("");
   const [password, setPassword] = useState("");
   // const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const a=await login({ email, password });
+      const a=await login({ emailId, password });
       console.log(a);
       toast.success("Login successful");
       navigate("/dashboard");
@@ -29,17 +29,17 @@ const Login = () => {
         Login to Your Account
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Email Input */}
+        {/* emailId Input */}
         <div>
-          <label className="block text-gray-600 mb-2" htmlFor="email">
-            Email Address
+          <label className="block text-gray-600 mb-2" htmlFor="emailId">
+            emailId Address
           </label>
           <input
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="emailId"
+            type="emailId"
+            placeholder="Enter your emailId"
+            value={emailId}
+            onChange={(e) => setemailId(e.target.value)}
             required
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />

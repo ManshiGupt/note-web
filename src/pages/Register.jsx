@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { signUp } from "../services/authService";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [emailId, setemailId] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     // Input validation
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !emailId || !password) {
       toast.error("All fields are required!");
       return;
     }
 
     try {
-      await signUp({ name, email, password });
+      await signUp({firstName, lastName, emailId, password });
       toast.success("Registration successful! Please log in.");
       navigate("/login"); // Redirect to Login page
     } catch (error) {
@@ -39,30 +40,45 @@ const Register = () => {
           {/* Name Input */}
           <div>
             <label className="block text-gray-600 mb-2" htmlFor="name">
-              Name
+              First Name
             </label>
             <input
-              id="name"
+              id="firstName"
               type="text"
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your firstName"
+              value={firstName}
+              onChange={(e) => setfirstName(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          {/* Name Input */}
+          <div>
+            <label className="block text-gray-600 mb-2" htmlFor="name">
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              type="text"
+              placeholder="Enter your lastName"
+              value={lastName}
+              onChange={(e) => setlastName(e.target.value)}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/* Email Input */}
+          {/* emailId Input */}
           <div>
-            <label className="block text-gray-600 mb-2" htmlFor="email">
-              Email Address
+            <label className="block text-gray-600 mb-2" htmlFor="emailId">
+              emailId Address
             </label>
             <input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="emailId"
+              type="emailId"
+              placeholder="Enter your emailId"
+              value={emailId}
+              onChange={(e) => setemailId(e.target.value)}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
