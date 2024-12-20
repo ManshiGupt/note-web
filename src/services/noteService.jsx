@@ -34,7 +34,7 @@ export const updateNote = async (id, updates) => {
     const response = await api.patch(`/edit/${id}`, updates); // Patch to /api/note/edit/:id
     return response.data;
   } catch (error) {
-    console.error(`Error updating note (ID: ${id}):`, error.response?.data || error.message);
+    console.error(`Error updating noote (ID: ${id}):`, error.response?.data || error.message);
     throw error;
   }
 };
