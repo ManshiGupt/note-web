@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../services/authService";
+import { signUp } from "../services/authService";
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -19,7 +19,7 @@ const Register = () => {
     }
 
     try {
-      await registerUser({ name, email, password });
+      await signUp({ name, email, password });
       toast.success("Registration successful! Please log in.");
       navigate("/login"); // Redirect to Login page
     } catch (error) {

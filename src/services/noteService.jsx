@@ -7,7 +7,7 @@ const api = axios.create({
 
 // Fetch all notes
 export const getNotes = async () => {
-  try {
+  try { 
     const response = await axios.get("http://localhost:3000/note/view");
     console.log(response);
     return response.data;
