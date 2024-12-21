@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const [emailId, setemailId] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

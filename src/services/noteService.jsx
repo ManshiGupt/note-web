@@ -9,7 +9,7 @@ const api = axios.create({
 // Fetch all notes
 export const getNotes = async () => {
   try {
-    const response = await axios.get(BASE_URL+"note/view");
+    const response = await axios.get(BASE_URL+"/note/view");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -21,7 +21,7 @@ export const getNotes = async () => {
 // Create a new note
 export const createNote = async (data) => {
   try {
-    const response = await axios.post(BASE_URL+"/", data); // Post to /api/note
+    const response = await axios.post(BASE_URL+"/note", data); // Post to /api/note
     return response.data;
   } catch (error) {
     console.error("Error create note:", error.response?.data || error.message);
@@ -43,7 +43,7 @@ export const updateNote = async (id, updates) => {
 // Delete a note by ID
 export const deleteNote = async (id) => {
   try {
-    const response = await axios.delete(`/delete/${id}`); // Delete to /api/note/delete/:id
+    const response = await axios.delete(BASE_URL+ `/note/delete/${id}`); // Delete to /api/note/delete/:id
     return response.data;
   } catch (error) {
     console.error(`Error deleting note (ID: ${id}):`, error.response?.data || error.message);
