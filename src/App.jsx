@@ -48,13 +48,32 @@ import React from 'react'
 import Dashboard from "./pages/Dashboard"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import Profile from './pages/Profile'
+import { useState } from 'react'
+import { useEffect } from 'react'
 const App = () => {
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check for dark mode preference on page load
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem("darkMode") === "true";
+    setDarkMode(savedDarkMode);
+  }, []);
+
+  // Toggle Dark Mode and save preference in localStorage
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem("darkMode", newDarkMode); // Save preference in localStorage
+  };
   
   return (
     <div>
       {/* <Dashboard/> */}
       {/* <Login/> */}
-      <Register/>
+      {/* <Register/> */} 
+      <Profile darkMode={darkMode}/>
     </div>
   )
 }
