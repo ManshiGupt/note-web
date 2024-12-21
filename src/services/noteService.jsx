@@ -24,7 +24,7 @@ export const createNote = async (data) => {
     const response = await axios.post(BASE_URL+"/", data); // Post to /api/note
     return response.data;
   } catch (error) {
-    console.error("Error creaaaaaaaaating note:", error.response?.data || error.message);
+    console.error("Error create note:", error.response?.data || error.message);
     throw error;
   }
 };
