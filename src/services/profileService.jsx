@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 // Base API instance for cleaner configuration
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/profile", // Base URL for all profile-related endpoints
+  baseURL: "http://localhost:3000/profile", // Base URL for all profile-related endpoints
 });
 
 // Fetch user profile
