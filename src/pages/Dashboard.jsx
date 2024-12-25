@@ -169,19 +169,11 @@ const Dashboard = () => {
     fetchData();
  }
 
- const fill = note.filter((data)=>{
-  data.category== cat
-  console.log("cat",cat);
-  console.log("fill",data);
-  console.log("gshgd",data.category== cat);
- })
- console.log(fill);
- const filteredProducts =
-    cat=== "all"
-      ? note
-      : note.filter((product) => product.category === category);
+ 
+ 
+ const filteredProducts = note.filter((n)=>(n.category==cat))
 
-
+console.log("notccce", note.filter((n)=>(n.category==cat)))
   return (
     <div>
       {["all","a","b","c"].map((data)=>(
@@ -191,8 +183,9 @@ const Dashboard = () => {
 {cat}
       { filteredProducts.length>0 && note.map((data)=>(
         <div className='p-40 '>
+          {console.log("datatata",data)}
            <h1>
-            <h1>TITLE</h1>
+            <h1>TIdddTLE</h1>
            {data.title}
            </h1>
            <h1>
