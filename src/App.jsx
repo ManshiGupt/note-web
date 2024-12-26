@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
 import "./index.css"; // Tailwind or Bootstrap
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -34,6 +35,10 @@ function App() {
           <Route
             path="/dashboard"
             element={<Dashboard darkMode={darkMode} />}
+          />
+           <Route
+            path="/n"
+            element={<NotFound  />}
           />
           <Route path="/profile" element={<Profile darkMode={darkMode} />} />
           <Route path="*" element={<Login />} />
